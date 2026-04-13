@@ -1,8 +1,7 @@
-const express = require("express");
-const router = express.Router();
+const router = require('express').Router();
 
-router.get("/", (req, res, next) => {
-  res.json("All good in here");
-});
+// Grouping them under sub-paths
+router.use('/notebooks', require('./notebook.routes'));
+router.use('/sheets', require('./sheet.routes'))
 
 module.exports = router;
