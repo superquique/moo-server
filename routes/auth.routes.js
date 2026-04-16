@@ -43,6 +43,15 @@ router.post("/signup", (req, res, next) => {
     return;
   }
 
+  const nameRegex = /^[A-Za-z0-9-]{3,30}$/;
+  if (!nameRegex.test(name)) {
+    res.status(400).json({
+      message:
+        "Must be 3 to 30 characters containing only letters, numbers or dash"
+    });
+    return;
+  }
+
   // Check the users collection if a user with the same email already exists
   User.findOne({ email })
     .then((foundUser) => {
