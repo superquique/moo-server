@@ -10,6 +10,10 @@ const sheetSchema = new Schema (
         notes: String,
         chords: String,
         lyrics: String,
+        isFavorite: {
+            type: Boolean,
+            default: false
+        },
         notebook: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "Notebook"

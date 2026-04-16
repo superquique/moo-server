@@ -67,8 +67,15 @@ router.get("/:id", isAuthenticated, isOwner(Sheet), (req, res, next) => {
 router.get("/", isAuthenticated, (req, res, next) => {
     console.log(`req.payload`, req.payload);
     const userId = req.payload._id;
+    const favorite = req.query.favorite;
 
-    Sheet.find({user: userId}).populate('notebook')
+    query = {user: userId};
+
+    if (favorite) {
+      query.isFavorite = favorite === 'true';
+    }
+
+    Sheet.find(query).populate('notebook')
     .then((sheets) => {
       console.log("Found sheets", sheets);
       res.status(200).json(sheets);
