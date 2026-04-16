@@ -65,8 +65,15 @@ router.get("/:id", isAuthenticated, isOwner(Notebook), (req, res, next) => {
 router.get("/", isAuthenticated, (req, res, next) => {
     console.log(`req.payload`, req.payload);
     const userId = req.payload._id;
+    const favorite = req.query.favorite;
 
-    Notebook.find({user: userId})
+    query = {user: userId};
+
+    if (favorite) {
+      query.isFavorite = favorite === 'true';
+    }
+
+    Notebook.find(query)
     .then((notebooks) => {
       console.log("Found notebooks", notebooks);
       res.status(200).json(notebooks);
