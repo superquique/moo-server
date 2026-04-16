@@ -4,6 +4,10 @@ const Schema = mongoose.Schema;
 const notebookSchema = new Schema(
     {
         name: String,
+        isFavorite: {
+            type: Boolean,
+            default: false
+        },
         user: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "User"
