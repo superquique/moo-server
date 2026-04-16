@@ -68,7 +68,7 @@ router.get("/", isAuthenticated, (req, res, next) => {
     console.log(`req.payload`, req.payload);
     const userId = req.payload._id;
 
-    Sheet.find({user: userId})
+    Sheet.find({user: userId}).populate('notebook')
     .then((sheets) => {
       console.log("Found sheets", sheets);
       res.status(200).json(sheets);
