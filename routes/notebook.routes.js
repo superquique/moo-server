@@ -66,11 +66,16 @@ router.get("/", isAuthenticated, (req, res, next) => {
     console.log(`req.payload`, req.payload);
     const userId = req.payload._id;
     const favorite = req.query.favorite;
+    const name = req.query.name;
 
     query = {user: userId};
 
     if (favorite) {
       query.isFavorite = favorite === 'true';
+    }
+
+    if (name) {
+      query.$text = { $search: name}
     }
 
     Notebook.find(query)

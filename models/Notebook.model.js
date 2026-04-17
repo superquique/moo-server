@@ -19,6 +19,8 @@ const notebookSchema = new Schema(
     }
 )
 
+notebookSchema.index({ name: 'text' });
+
 const Notebook = mongoose.model("Notebook", notebookSchema);
 
 module.exports = Notebook;
