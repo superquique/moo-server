@@ -70,7 +70,7 @@ router.get("/", isAuthenticated, (req, res, next) => {
     const favorite = req.query.favorite;
     const title = req.query.title;
 
-    query = {user: userId};
+    let query = {user: userId};
 
     if (favorite) {
       query.isFavorite = favorite === 'true';
@@ -95,8 +95,15 @@ router.get("/notebook/:notebookId", isAuthenticated, (req, res, next) => {
     console.log(`req.payload`, req.payload);
     const userId = req.payload._id;
     const { notebookId } = req.params;
+    const title = req.query.title;
 
-    Sheet.find({user: userId, notebook: notebookId})
+    let query = {user: userId, notebook: notebookId}
+
+    if (title) {
+      query.$text = { $search: title}
+    }
+
+    Sheet.find(query)
     .then((sheets) => {
       console.log("Found sheets", sheets);
       res.status(200).json(sheets);
