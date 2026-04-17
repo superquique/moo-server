@@ -68,11 +68,16 @@ router.get("/", isAuthenticated, (req, res, next) => {
     console.log(`req.payload`, req.payload);
     const userId = req.payload._id;
     const favorite = req.query.favorite;
+    const title = req.query.title;
 
     query = {user: userId};
 
     if (favorite) {
       query.isFavorite = favorite === 'true';
+    }
+
+    if (title) {
+      query.$text = { $search: title}
     }
 
     Sheet.find(query).populate('notebook')

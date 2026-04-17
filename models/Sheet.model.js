@@ -29,6 +29,8 @@ const sheetSchema = new Schema (
     }
 )
 
+sheetSchema.index({ title: 'text' });
+
 const Sheet = mongoose.model("Sheet", sheetSchema);
 
 module.exports = Sheet;
